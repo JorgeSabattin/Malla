@@ -193,7 +193,7 @@ const CAREERS = [
     grado:"Ingeniero(a) en Automatización y Robótica",
     href:"malla_automatizacion_robotica.html",
     badge:"DUN 14-2022", regimen:"Semestral",
-    cursos:43, periodos:"8 sem", periodoLbl:"Semestres", creditos:240,
+    cursos:43, periodos:"8 sem", periodoLbl:"Semestres", creditos:240, credLbl:"Créditos SCT",
     keywords:"automatizacion robotica control mecatronica",
     areas:[
       ["#2563eb","Matemáticas"],["#0891b2","Ciencias Físicas"],
@@ -208,7 +208,7 @@ const CAREERS = [
     grado:"Ingeniero(a) Civil Eléctrico(a)",
     href:"malla_ingenieria_civil_electrica.html",
     badge:"DUN 84-2022", regimen:"Semestral",
-    cursos:49, periodos:"10 sem", periodoLbl:"Semestres", creditos:300,
+    cursos:49, periodos:"10 sem", periodoLbl:"Semestres", creditos:300, credLbl:"Créditos SCT",
     keywords:"electrica energia potencia electronica civil",
     areas:[
       ["#2563eb","Matemáticas"],["#0891b2","Ciencias Básicas"],
@@ -223,7 +223,7 @@ const CAREERS = [
     grado:"Ingeniero(a) Civil Informático(a)",
     href:"malla_ingenieria_civil_informatica.html",
     badge:"Plan 12210", regimen:"Semestral · 5 años",
-    cursos:48, periodos:"10 sem", periodoLbl:"Semestres", creditos:669,
+    cursos:48, periodos:"10 sem", periodoLbl:"Semestres", creditos:669, credLbl:"Créditos UNAB",
     keywords:"informatica software computacion datos civil",
     areas:[
       ["#2563eb","Matemáticas"],["#0891b2","Ciencias Básicas"],
@@ -237,7 +237,7 @@ const CAREERS = [
     grado:"Ingeniero(a) Industrial",
     href:"malla_ingenieria_industrial.html",
     badge:"DUN 71-2022", regimen:"Continuidad · Trimestral",
-    cursos:34, periodos:"8 trim", periodoLbl:"Trimestres", creditos:114,
+    cursos:34, periodos:"8 trim", periodoLbl:"Trimestres", creditos:114, credLbl:"Créditos SCT",
     keywords:"industrial gestion procesos operaciones economia continuidad",
     areas:[
       ["#2563eb","Matemáticas"],["#0891b2","Ciencias Básicas"],
@@ -267,7 +267,7 @@ function cardHTML(c){
       <div class="facts">
         <div class="fact"><b>${c.cursos}</b><span>Asignaturas</span></div>
         <div class="fact"><b>${c.periodos.split(' ')[0]}</b><span>${c.periodoLbl}</span></div>
-        <div class="fact"><b>${c.creditos}</b><span>Créditos</span></div>
+        <div class="fact"><b>${c.creditos}</b><span>${c.credLbl}</span></div>
       </div>
       <div class="areas">
         <span class="dots" aria-hidden="true">${dots}</span>

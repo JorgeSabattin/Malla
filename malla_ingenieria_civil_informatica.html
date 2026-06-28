@@ -276,7 +276,7 @@
     <div class="progress-inner">
       <div class="prog-stats">
         <div class="prog-stat"><b id="prog-aprob">0</b><span id="prog-aprob-l">/ 48 asignaturas</span></div>
-        <div class="prog-stat"><b id="prog-cred">0</b><span>/ 669 créditos</span></div>
+        <div class="prog-stat"><b id="prog-cred">0</b><span>/ 669 créditos UNAB</span></div>
       </div>
       <div class="prog-bar" role="progressbar" aria-label="Avance de carrera">
         <div class="prog-fill" id="prog-fill"></div>
@@ -360,7 +360,7 @@ const cardEl={}; let drawerOpen=false; let currentCode=null;
 const totCr = CURSOS.reduce((s,c)=>s+c.creditos,0);
 const sems = [...new Set(CURSOS.map(c=>c.semestre))].sort((a,b)=>a-b);
 document.getElementById('stats').innerHTML = [
-  [sems.length,'Semestres'],[CURSOS.length,'Asignaturas'],[totCr,'Créditos'],[sems.length/2,'Años']
+  [sems.length,'Semestres'],[CURSOS.length,'Asignaturas'],[totCr,'Créditos UNAB'],[sems.length/2,'Años']
 ].map(([b,s])=>`<div class="stat"><b>${b}</b><span>${s}</span></div>`).join('');
 
 // ----- legend -----
@@ -567,7 +567,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&drawer.classList.co
 // ----- footer -----
 document.getElementById('foot').innerHTML =
   `<span><b style="color:var(--ink-soft)">${CURSOS.length}</b> asignaturas</span><span class="sep">·</span>`+
-  `<span><b style="color:var(--ink-soft)">${totCr}</b> créditos</span><span class="sep">·</span>`+
+  `<span><b style="color:var(--ink-soft)">${totCr}</b> créditos UNAB</span><span class="sep">·</span>`+
   `<span>10 semestres · 5 años</span><span class="sep">·</span>`+
   `<span>Fuente: Malla UNAB 12210 · Catálogo 2020</span><span class="sep">·</span>`+
   `<span>Pasa el cursor por una asignatura para ver su cadena de prerrequisitos · clic para el detalle</span>`;
