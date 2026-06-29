@@ -148,6 +148,19 @@
   @media(prefers-reduced-motion:reduce){
     *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
   }
+
+  /* ---------- Visitor counter ---------- */
+  .foot-inner{align-items:center}
+  .visitas{
+    display:inline-flex;align-items:center;gap:7px;
+    background:var(--surface-2);border:1px solid var(--line);border-radius:20px;
+    padding:5px 12px 5px 10px;color:var(--ink-soft);font-size:11.5px;font-weight:600;
+    letter-spacing:.02em;white-space:nowrap;order:0
+  }
+  .visitas svg{flex:none;color:var(--ink-faint)}
+  .visitas b{color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:0}
+  .visitas .vlbl{color:var(--ink-faint);text-transform:uppercase;letter-spacing:.07em;font-size:10px}
+  .visitas[data-hidden="true"]{display:none}
 </style>
 </head>
 <body>
@@ -182,6 +195,10 @@
 <footer>
   <div class="foot-inner">
     <span>Mallas interactivas · UNAB · uso referencial para orientación académica</span>
+    <span class="visitas" id="visitas" title="Visitas totales a la página">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+      <b id="vcount">…</b><span class="vlbl">visitas</span>
+    </span>
     <span>Los planes de estudio oficiales prevalecen sobre esta herramienta</span>
   </div>
 </footer>
@@ -339,6 +356,49 @@ function render(filter=""){
 
 render();
 document.getElementById('q').addEventListener('input', e => render(e.target.value));
+</script>
+<script>
+/* Contador de visitas — Abacus (gratuito, sin registro). Cuenta 1 por sesión de navegador. */
+(function(){
+  var NS = "unab-malla-sabattin";      // namespace propio del sitio
+  var KEY = "home";
+  var BASE = "https://abacus.jasoncameron.dev";
+  var box = document.getElementById("visitas");
+  var out = document.getElementById("vcount");
+  if(!box || !out) return;
+
+  var nf = new Intl.NumberFormat("es-CL");
+  function paint(n){
+    if(typeof n !== "number" || isNaN(n)){ box.setAttribute("data-hidden","true"); return; }
+    // animación de conteo
+    var start = 0, dur = 900, t0 = null;
+    function step(ts){
+      if(!t0) t0 = ts;
+      var p = Math.min((ts - t0)/dur, 1);
+      var val = Math.floor(start + (n - start)*(p*(2-p))); // easeOut
+      out.textContent = nf.format(val);
+      if(p < 1) requestAnimationFrame(step);
+      else out.textContent = nf.format(n);
+    }
+    requestAnimationFrame(step);
+  }
+
+  // 1 visita por sesión: incrementa solo la primera vez en esta pestaña; si no, solo lee.
+  var counted = false;
+  try { counted = sessionStorage.getItem("malla_visit_counted") === "1"; } catch(e){}
+  var url = BASE + (counted ? "/get/" : "/hit/") + NS + "/" + KEY;
+
+  fetch(url)
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      var n = (d && (d.value!=null ? d.value : d.count));
+      if(typeof n === "number"){
+        paint(n);
+        try { sessionStorage.setItem("malla_visit_counted","1"); } catch(e){}
+      } else { box.setAttribute("data-hidden","true"); }
+    })
+    .catch(function(){ box.setAttribute("data-hidden","true"); });
+})();
 </script>
 </body>
 </html>
